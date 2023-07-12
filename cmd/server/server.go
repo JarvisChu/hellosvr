@@ -33,7 +33,7 @@ func setup() error {
 
 func run() error {
 	addr := fmt.Sprintf(":%v", config.GetConfig().App.Port)
-	fmt.Printf("server is running on %v ...\n", addr)
+	fmt.Printf("server:%v is running on %v ...\n", config.GetConfig().App.Name, addr)
 
 	r := gin.Default()
 	routers.InitRouters(r)

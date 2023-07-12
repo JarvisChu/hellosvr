@@ -14,7 +14,8 @@ type Config struct {
 }
 
 type AppConfig struct {
-	Port int `yaml:"port"`
+	Port int    `yaml:"port"`
+	Name string `yaml:"name"`
 }
 
 func InitConfig(cfgPath string) error {
@@ -30,6 +31,7 @@ func InitConfig(cfgPath string) error {
 
 func defaultSettings() {
 	config.App.Port = 8080
+	config.App.Name = "svr"
 }
 
 func parseConfig(cfgPath string) error {

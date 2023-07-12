@@ -12,4 +12,4 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
 COPY --from=builder /build_dir/hellosvr /
 EXPOSE 8080
 
-ENTRYPOINT ["/hellosvr", "server"]
+CMD ["/hellosvr", "server"]
