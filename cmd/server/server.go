@@ -13,7 +13,7 @@ var (
 	Cmd     = &cobra.Command{
 		Use:     "server",
 		Short:   "Start a web server",
-		Example: "hellosvr server -c etc/configs.yml",
+		Example: "hellosvr server -c /etc/configs.yml",
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return setup()
 		},

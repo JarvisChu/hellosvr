@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellosvr
+  namespace: prod
+  labels:
+    app: hellosvr
+spec:
+  replicas: 1 # [可选，默认1] 副本数
+  strategy:   # [可选，默认RollingUpdate] POD 更新策略，即新旧POD如何更新
+    type: RollingUpdate # 滚动更新。 另一种可选type是Recreate，即先把旧的POD全部KILL，再创建新的POD
+    rollingUpdate:      # 指定滚动更新的参数
+      maxSurge: 1       # [可选，默认25%]最大峰值（可以是具体数值，或者百分比），即滚动更新过程中，可以超过期望POD数量的POD数量，即每次滚动的步长，即每次滚动时能新建的POD数量。比如期望POD数量是2，maxSurge是1，则滚动更新过程中，最大峰值POD数量为 2+1 = 3
+      maxUnavailable: 0 # [可选，默认25%] 最大不可用（可以是具体数值，或者百分比），即滚动更新过程中，不可用的POD的个数上限
+  progressDeadlineSeconds: 600 # [可选，默认600] 升级过程中最大的等待时间，单位s。超过等待时间，Deployment 会被标记为"type: Progressing, status: "False", reason: ProgressDeadlineExceeded"。未来如果实现了自动回滚，则会回滚。
+  selector:   # [必选] pod 选择器。 必须要能匹配 .spec.template.metadata.labels，否则 Deployment 会创建失败
+    matchLabels:
+      app: hellosvr
+  template:   # [必选] pod 模板
+    metadata:
+      labels:
+        app: hellosvr
+    spec:
+      containers:
+        - name: hellosvr
+          image: "jarvischu/hellosvr:main_cefa258"
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/hellosvr"
+            - "server"
+            - "-c"
+            - "/etc/configs.yaml"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PATH
+              value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          volumeMounts: # 声明加载这些卷到容器的位置
+            - name: config-volume
+              mountPath: /etc/configs.yaml # 如果不使用 subPath，会覆盖 /etc 下所有文件。
+              subPath: configs.yaml        # 使用 subPath 只会覆盖 /etc/configs.yaml 文件
+              readOnly: true
+      volumes:  # 指定要为pod提供的卷
+        - name: config-volume
+          configMap:
+            name: hellosvr-config
+
+
+
+
+
+
+
+
+

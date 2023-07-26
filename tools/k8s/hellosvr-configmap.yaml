@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hellosvr-config
+  namespace: prod
+data:
+  configs.yaml: |
+    app:
+      port: 8080 # 端口号
+      name: hellosvr
