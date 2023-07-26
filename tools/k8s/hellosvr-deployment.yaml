@@ -37,7 +37,7 @@ spec:
               value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
           volumeMounts: # 声明加载这些卷到容器的位置
             - name: config-volume
-              mountPath: /etc/configs.yaml # 如果不使用 subPath，会覆盖 /etc 下所有文件。
+              mountPath: /etc/configs.yaml # 如果不使用 subPath，会有问题。(1) 只写 /etc 会覆盖etc下所有文件，(2) 写 /etc/configs.yaml 文件虽然能创建，但仍然有问题
               subPath: configs.yaml        # 使用 subPath 只会覆盖 /etc/configs.yaml 文件
               readOnly: true
       volumes:  # 指定要为pod提供的卷
