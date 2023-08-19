@@ -6,5 +6,5 @@ metadata:
 data:
   configs.yaml: |
     app:
-      port: 8080 # 端口号
-      name: hellosvr
+      port: 8080    # 端口号
+      echo: "hello" # /api/v1/echo response message

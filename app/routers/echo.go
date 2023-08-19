@@ -2,6 +2,7 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/jarvischu/hellosvr/config"
 	"net/http"
 )
 
@@ -12,7 +13,6 @@ func init() {
 func registerEchoRouter(g *gin.RouterGroup) {
 	r := g.Group("/api/v1")
 	r.GET("echo", func(c *gin.Context) {
-		data := c.Query("data")
-		c.String(http.StatusOK, data)
+		c.String(http.StatusOK, config.GetConfig().App.Echo)
 	})
 }

@@ -7,10 +7,10 @@ version() {
 }
 
 SERVICE=hellosvr
-REGISTRY=docker.io
+REGISTRY=your_registry # e.g. docker.io
 NAMESPACE=your_namespace
 VERSION=$(version)
 
-docker login --username=your_name --password=your_password ${REGISTRY}
+docker login --username=your_username --password=your_password ${REGISTRY}
 docker build -t ${REGISTRY}/${NAMESPACE}/${SERVICE}:${VERSION} .
 docker push ${REGISTRY}/${NAMESPACE}/${SERVICE}:${VERSION}
